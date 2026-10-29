@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARKEASE — FEU Roosevelt Marikina</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <input type="radio" name="tab" id="tab-live" class="tab-radio" checked>
+    <input type="radio" name="tab" id="tab-admin" class="tab-radio">
+    <header class="top">
+        <div class="top-inner">
+            <div class="brand">
+                <img class="brand-logo" src="tamaraw.png" alt="FEU logo">
+                <div class="brand-text">
+                    <div class="wordmark">PARK<span>EASE</span></div>
+                    <div class="campus-line">FEU Roosevelt Marikina — Parking Slot
+                        Monitoring</div>
+                </div>
+            </div>
+            <div class="status-cluster">
+                <span class="pill"><span class="dot" id="connDot"></span><span id="connText">server not
+                        connected</span></span>
+                <span class="pill" id="date">--</span>
+                <span class="pill" id="clock">00:00:00</span>
+            </div>
+        </div>
+        <nav class="tabs">
+            <label for="tab-live" class="tab-btn tab-btn-live">Live
+                Dashboard</label>
+            <label for="tab-admin" class="tab-btn tab-btn-admin">Admin</label>
+        </nav>
+    </header>
+    <main>
+        <!-- LIVE VIEW -->
+        <section class="view" id="view-live">
+            <div class="lede">
+                <div>
+                    <h1>Slot availability, right now</h1>
+                    <p>Two prototype bays near Gate 2 are fitted with ultrasonic
+                        sensors. Status updates automatically — no need to refresh.</p>
+                </div>
+                <div class="synced">last synced<br><b id="syncedAgo">just
+                        now</b></div>
+            </div>
+            <div class="demo-banner" id="demoBanner">
+                Demo mode — the dashboard couldn't reach the PARKEASE server, so
+                this is simulated sensor data. Point <code>API_BASE</code> in the script
+                to your deployed server to go live.
+            </div>
+            <div class="slot-grid" id="liveSlots">
+                <!-- Bay 1 (Online/Available) -->
+                <div class="slot-sign">
+                    <div class="band"></div>
+                    <div class="body">
+                        <div class="slot-num">BAY 01 · GATE 2</div>
+                        <div class="slot-letter">1</div>
+                        <div class="slot-status">Available</div>
+                        <div class="readout"><span>Sensor Online</span></div>
+                    </div>
+                </div>
+                <!-- Bay 2 (Offline) -->
+                <div class="slot-sign offline">
+                    <div class="band"></div>
+                    <div class="body">
+                        <div class="slot-num">BAY 02 · GATE 2</div>
+                        <div class="slot-letter">2</div>
+                        <div class="slot-status">Sensor Offline</div>
+                        <div class="readout"><span>Sensor Offline</span></div>
+                    </div>
+                </div>
+                <!-- Bay 3 (Offline) -->
+                <div class="slot-sign offline">
+                    <div class="band"></div>
+                    <div class="body">
+                        <div class="slot-num">BAY 03 · GATE 2</div>
+                        <div class="slot-letter">3</div>
+                        <div class="slot-status">Sensor Offline</div>
+                        <div class="readout"><span>Sensor Offline</span></div>
+                    </div>
+                </div>
+                <!-- Bay 4 (Offline) -->
+                <div class="slot-sign offline">
+                    <div class="band"></div>
+                    <div class="body">
+                        <div class="slot-num">BAY 04 · GATE 2</div>
+                        <div class="slot-letter">4</div>
+                        <div class="slot-status">Sensor Offline</div>
+                        <div class="readout"><span>Sensor Offline</span></div>
+                    </div>
+                </div>
+                <!-- Bay 5 (Offline) -->
+                <div class="slot-sign offline">
+                    <div class="band"></div>
+                    <div class="body">
+                        <div class="slot-num">BAY 05 · GATE 2</div>
+                        <div class="slot-letter">5</div>
+                        <div class="slot-status">Sensor Offline</div>
+                        <div class="readout"><span>Sensor Offline</span></div>
+                    </div>
+                </div>
+                <!-- Bay 6 (Offline) -->
+                <div class="slot-sign offline">
+                    <div class="band"></div>
+                    <div class="body">
+                        <div class="slot-num">BAY 06 · GATE 2</div>
+                        <div class="slot-letter">6</div>
+                        <div class="slot-status">Sensor Offline</div>
+                        <div class="readout"><span>Sensor Offline</span></div>
+                    </div>
+                </div>
+                <!-- Bay 7 (Offline) -->
+                <div class="slot-sign offline">
+                    <div class="band"></div>
+                    <div class="body">
+                        <div class="slot-num">BAY 07 · GATE 2</div>
+                        <div class="slot-letter">7</div>
+                        <div class="slot-status">Sensor Offline</div>
+                        <div class="readout"><span>Sensor Offline</span></div>
+                    </div>
+                </div>
+                <!-- Bay 8 (Offline) -->
+                <div class="slot-sign offline">
+                    <div class="band"></div>
+                    <div class="body">
+                        <div class="slot-num">BAY 08 · GATE 2</div>
+                        <div class="slot-letter">8</div>
+                        <div class="slot-status">Sensor Offline</div>
+                        <div class="readout"><span>Sensor Offline</span></div>
+                    </div>
+                </div>
+                <!-- Bay 9 (Offline) -->
+                <div class="slot-sign offline">
+                    <div class="band"></div>
+                    <div class="body">
+                        <div class="slot-num">BAY 09 · GATE 2</div>
+                        <div class="slot-letter">9</div>
+                        <div class="slot-status">Sensor Offline</div>
+                        <div class="readout"><span>Sensor Offline</span></div>
+                    </div>
+                </div>
+                <!-- Bay 10 (Offline) -->
+                <div class="slot-sign offline">
+                    <div class="band"></div>
+                    <div class="body">
+                        <div class="slot-num">BAY 10 · GATE 2</div>
+                        <div class="slot-letter">10</div>
+                        <div class="slot-status">Sensor Offline</div>
+                        <div class="readout"><span>Sensor Offline</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="legend">
+                <span><i style="background:var(--available)"></i>Available</span>
+                <span><i style="background:var(--occupied)"></i>Occupied</span>
+                <span><i style="background:var(--offline)"></i>Not
+                    Available</span>
+            </div>
+        </section>
+        <!-- ADMIN VIEW -->
+        <section class="view" id="view-admin">
+            <div class="lede">
+                <div>
+                    <h1>Parking-lot activity</h1>
+                    <p>Occupancy summary and event history for the prototype
+                        deployment.</p>
+                </div>
+                <div class="synced">last synced<br><b id="syncedAgoAdmin">just
+                        now</b></div>
+            </div>
+            <div class="stat-row">
+                <div class="stat"><b id="statAvailable">1</b><span>Slots
+                        available</span></div>
+                <div class="stat"><b id="statOccupied">0</b><span>Slots
+                        occupied</span></div>
+                <div class="stat"><b id="statNotAvailable" class="danger">9</b><span>Slots On Service</span></div>
+            </div>
+            <div class="admin-slots" id="adminSlots">
+                <div class="mini-slot"><span class="name">Bay 1</span><span class="tag">Available</span></div>
+                <div class="mini-slot offline"><span class="name">Bay 2</span><span class="tag">Not Available</span></div>
+                <div class="mini-slot offline"><span class="name">Bay 3</span><span class="tag">Not Available</span></div>
+                <div class="mini-slot offline"><span class="name">Bay 4</span><span class="tag">Not Available</span></div>
+                <div class="mini-slot offline"><span class="name">Bay 5</span><span class="tag">Not Available</span></div>
+                <div class="mini-slot offline"><span class="name">Bay 6</span><span class="tag">Not Available</span></div>
+                <div class="mini-slot offline"><span class="name">Bay 7</span><span class="tag">Not Available</span></div>
+                <div class="mini-slot offline"><span class="name">Bay 8</span><span class="tag">Not Available</span></div>
+                <div class="mini-slot offline"><span class="name">Bay 9</span><span class="tag">Not Available</span></div>
+                <div class="mini-slot offline"><span class="name">Bay 10</span><span class="tag">Not Available</span></div>
+            </div>
+            <div class="log-card">
+                <div class="print-only print-title">PARKEASE — Parking-lot activity log<br><small>Printed <span id="printedAt"></span></small></div>
+                <div class="log-toolbar">
+                    <button type="button" id="printLogBtn">Print</button>
+                    <button type="button" id="downloadLogBtn" class="secondary">Download CSV</button>
+                </div>
+                <table class="log">
+                    <caption>Recent activity</caption>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">Time</th>
+                            <th style="width: 20%;">Slot</th>
+                            <th style="width: 20%;">Event</th>
+                            <th style="width: 40%;">Plate NO.</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logBody">
+                        <tr>
+                            <td>14:02:11</td>
+                            <td>Bay 1</td>
+                            <td class="event-available">Available</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="admin-action">
+                    <h3>Log Vehicle Entry</h3>
+                    <div class="action-inputs">
+                        <select id="baySelect">
+                            <option value="Bay 1">Bay 1</option>
+                            <option value="Bay 2">Bay 2</option>
+                            <option value="Bay 3">Bay 3</option>
+                            <option value="Bay 4">Bay 4</option>
+                            <option value="Bay 5">Bay 5</option>
+                            <option value="Bay 6">Bay 6</option>
+                            <option value="Bay 7">Bay 7</option>
+                            <option value="Bay 8">Bay 8</option>
+                            <option value="Bay 9">Bay 9</option>
+                            <option value="Bay 10">Bay 10</option>
+                        </select>
+                        <input type="text" id="plateInput" placeholder="Enter plate number (e.g. ABC 1234)"
+                            autocomplete="off">
+                        <button id="logBtn">Log Entry</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-inner">
+            PARKEASE prototype — FEU Roosevelt Marikina · System &amp; hardware
+            design, Group 1
+        </div>
+    </footer>
+    <script src="app.js"></script>
+</body>
+
+</html>

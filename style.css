@@ -1,0 +1,677 @@
+:root {
+  --ink: #17241E;
+  --green-deep: #1F4D3A;
+  --gold: #B98A2E;
+  --gold-soft: #E4C77A;
+  --available: #2F9E6E;
+  --available-bg: #E4F3EC;
+  --occupied: #C25B3E;
+  --occupied-bg: #F7E9E3;
+  --bg: #EEF1EA;
+  --paper: #FFFFFF;
+  --line: #D8DCD1;
+  --muted: #5B6B60;
+  --offline: #9AA39A;
+  --offline-bg: #E8EAE4;
+  --danger: #C0392B;
+  --cream: #F3F1E7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+  overflow-y: auto;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+#clock,
+#date {
+  font-size: 18px;
+  padding: 6px 14px;
+}
+
+/* Base Layout & Tabs */
+.tab-radio,
+.view {
+  display: none;
+}
+
+#tab-live:checked ~ main #view-live,
+#tab-admin:checked ~ main #view-admin {
+  display: block;
+}
+
+.top-inner,
+nav.tabs,
+main,
+.footer-inner {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+main {
+  padding: 36px 28px 40px;
+  flex: 1 0 auto;
+}
+
+/* Header & Brand */
+header.top {
+  background: var(--green-deep);
+  color: var(--cream);
+  border-bottom: 3px solid var(--gold);
+}
+
+.top-inner {
+  padding: 22px 28px 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-logo {
+  height: 90px; 
+  width: 90px; 
+  object-fit: contain;
+  flex: 0 0 auto;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.wordmark {
+  font-family: 'Fraunces', serif;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.wordmark span {
+  color: var(--gold-soft);
+}
+
+.campus-line {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #C9D3C6;
+  font-weight: 500;
+}
+
+/* Header Status & Navigation */
+.status-cluster {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  color: #DCE4D8;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(243, 241, 231, 0.25);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--occupied);
+  box-shadow: 0 0 0 3px rgba(194, 91, 62, 0.25);
+}
+
+.dot.on {
+  background: var(--available);
+  box-shadow: 0 0 0 3px rgba(47, 158, 110, 0.25);
+}
+
+nav.tabs {
+  padding: 0 28px;
+  display: flex;
+  gap: 28px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--cream);
+  padding: 16px 2px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+#tab-live:checked ~ header .tab-btn-live,
+#tab-admin:checked ~ header .tab-btn-admin {
+  border-bottom-color: var(--gold);
+}
+
+/* Page Titles & Headers */
+.lede {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.lede h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 26px;
+  margin: 0 0 6px;
+}
+
+.lede p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14.5px;
+  max-width: 52ch;
+}
+
+.synced {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
+}
+
+.demo-banner {
+  display: none;
+  background: var(--occupied-bg);
+  border: 1px solid #E8C3B4;
+  color: #8A3F28;
+  font-size: 13px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-bottom: 22px;
+  font-weight: 500;
+}
+
+.demo-banner.show {
+  display: block;
+}
+
+/* Card & Component Containers / Parking slots */
+.slot-sign,
+.mini-slot,
+.log-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.slot-sign {
+  overflow: hidden;
+  position: relative;
+}
+
+.slot-sign .band {
+  height: 6px;
+  background: var(--available);
+}
+
+.slot-sign .body {
+  padding: 26px 26px 22px;
+}
+
+.slot-num,
+.readout,
+table.log td {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+}
+
+.slot-num {
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.slot-letter {
+  font-family: 'Fraunces', serif;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 1;
+  margin: 6px 0 14px;
+}
+
+/* Status Badges & Colors */
+.slot-status,
+.mini-slot .tag {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 3px;
+  background: var(--available-bg);
+  color: var(--available);
+}
+
+.slot-status {
+  gap: 8px;
+  padding: 7px 14px;
+  font-size: 13px;
+  letter-spacing: 0.6px;
+}
+
+.mini-slot .tag {
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  padding: 4px 9px;
+}
+
+/* Occupied & Offline State Modifications */
+.occupied .band {
+  background: var(--occupied);
+}
+
+.occupied .slot-status,
+.mini-slot.occupied .tag,
+table.log td.event-occupied {
+  background: var(--occupied-bg);
+  color: var(--occupied);
+}
+
+table.log td.event-occupied {
+  background: none;
+}
+
+.offline .band {
+  background: var(--offline);
+}
+
+.offline .slot-status {
+  background: var(--offline-bg);
+  color: var(--offline);
+}
+
+.mini-slot.offline .tag {
+  background: var(--offline-bg);
+  color: var(--danger);
+}
+
+table.log td:empty::after {
+  content: "\00a0"; /* Non-breaking space keeps the cell height intact */
+  visibility: hidden;
+}
+
+table.log td.event-available {
+  color: var(--available);
+  font-weight: 600;
+}
+
+.readout {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+.readout b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Admin Side */
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.admin-slots {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.mini-slot {
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mini-slot .name {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.legend {
+  margin-top: 26px;
+  display: flex;
+  gap: 26px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+#view-admin {
+  overflow-x: auto;
+}
+
+.stat-row {
+  display: flex;
+  gap: 48px;
+  margin-bottom: 34px;
+  flex-wrap: wrap;
+}
+
+.stat b {
+  display: block;
+  font-family: 'Fraunces', serif;
+  font-size: 34px;
+  font-weight: 600;
+}
+
+.stat b.danger {
+  color: var(--danger);
+}
+
+.stat span {
+  font-size: 12.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Activity Table */
+.log-card {
+  border-radius: 6px;
+  padding: 22px 24px 20px; /* slightly more bottom padding */
+}
+
+table.log {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 13.5px;
+  margin-bottom: 20px;
+}
+
+table.log caption {
+  text-align: left;
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+table.log th {
+  text-align: left;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0 12px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+table.log td {
+  padding: 14px 12px;
+  font-size: 12.5px;
+  font-family: 'IBM Plex Mono', monospace;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--line);
+  height: 48px; /* Ensures all rows have a continuous consistent height */
+  box-sizing: border-box;
+}
+
+
+/* Fix the input area layout */
+.admin-action {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--line);
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.admin-action h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 12px 0;
+  color: var(--ink);
+}
+
+.action-inputs {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.action-inputs select {
+  width: 120px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  background: var(--paper);
+}
+
+.action-inputs input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+}
+
+.action-inputs button {
+  padding: 10px 20px;
+  background: var(--green-deep);
+  color: var(--cream);
+  border: 1px solid var(--green-deep);
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.action-inputs button:hover {
+  background: var(--ink);
+}
+
+/* Style the plate number text in the table */
+.plate-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  color: var(--ink);
+  background: #F4F6F3; 
+  border: 1px solid var(--line);
+  padding: 3px 8px;      /* Brings back the nice padding */
+  border-radius: 3px;    /* Gives it slightly rounded corners */
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 11.5px;
+  line-height: 1.2;
+  vertical-align: middle;
+  margin: 0;
+}
+
+/* Footer */
+footer {
+  width: 100%;
+  border-top: 1px solid var(--line);
+  margin-top: auto;
+  padding: 24px 28px;
+  flex-shrink: 0;
+}
+
+.footer-inner {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* Responsive Queries */
+@media (max-width: 1024px) {
+  .admin-slots {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .slot-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .slot-grid,
+  .admin-slots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .top-inner {
+    align-items: center;
+  }
+  .wordmark {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slot-grid,
+  .admin-slots {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Activity log: Print / Download buttons */
+.log-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.log-toolbar button {
+  background: var(--green-deep);
+  color: #fff;
+  border: 1px solid var(--green-deep);
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.log-toolbar button.secondary {
+  background: transparent;
+  color: var(--green-deep);
+}
+
+.log-toolbar button:hover {
+  opacity: 0.85;
+}
+
+.print-only {
+  display: none;
+}
+
+/* Print layout: only the activity log table is printed */
+@media print {
+  header,
+  footer,
+  #view-live,
+  .lede,
+  .stat-row,
+  .admin-slots,
+  .admin-action,
+  .log-toolbar,
+  .pe-logout,
+  .pe-overlay {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    margin-bottom: 14px;
+  }
+
+  .print-only small {
+    font-family: sans-serif;
+    font-size: 11px;
+    color: #555;
+  }
+
+  .log-card {
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  table.log {
+    table-layout: auto;
+  }
+
+  table.log tr {
+    page-break-inside: avoid;
+  }
+
+  body {
+    background: #fff !important;
+  }
+}
